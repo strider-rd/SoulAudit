@@ -1,29 +1,18 @@
 export default function FileUpload(props) {
   return (
     <div className="container">
-      <form className="form" onSubmit={(event) => event.preventDefault()}>
-        <div className="file-upload-wrapper" data-text="Select your file!">
-          <input
-            name="file-upload-field"
-            type="file"
-            className="file-upload-field"
-            value=""
-          />
-        </div>
+      <form onSubmit={(event) => event.preventDefault()}>
         <input
           type="file"
           id="file"
           name="file"
           onChange={props.onFileChange}
         />
-        <button
-          type="submit"
-          className="btn btn-info"
-          onClick={props.uploadClick}>
-          {' '}
-          Update File{' '}
-        </button>
       </form>
+      <button className="button" type="submit" onClick={props.uploadClick}>
+        {' '}
+        Update File{' '}
+      </button>
     </div>
   );
 }

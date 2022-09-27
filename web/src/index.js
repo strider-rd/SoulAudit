@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import FileUpload from './file-upload.js';
+import './style.css';
 
 class App extends React.Component {
   state = {
@@ -18,12 +19,10 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <FileUpload
-          uploadClick={() => this.handleClick()}
-          onFileChange={(event) => this.fileChanged(event)}
-        />
-      </div>
+      <FileUpload
+        uploadClick={() => this.handleClick()}
+        onFileChange={(event) => this.fileChanged(event)}
+      />
     );
   }
 }
