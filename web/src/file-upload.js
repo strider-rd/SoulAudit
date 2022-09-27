@@ -1,6 +1,6 @@
 export default function FileUpload(props) {
   return (
-    <div className="container">
+    <div className="max-height container">
       <form onSubmit={(event) => event.preventDefault()}>
         <input
           type="file"
@@ -13,6 +13,9 @@ export default function FileUpload(props) {
         {' '}
         Update File{' '}
       </button>
+      {props.fileName != null && props.fileName != undefined && (
+        <p>Uploaded file: - {props.fileName}</p>
+      )}
     </div>
   );
 }

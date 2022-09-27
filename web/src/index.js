@@ -14,15 +14,22 @@ class App extends React.Component {
 
   fileChanged(event) {
     console.log(event.target.files[0]);
-    this.setState({ selectedFile: event.target.files[0] });
+    this.setState({ selectedFile: event.target.files[0].name });
+  }
+
+  fileData() {
+    return this.render;
   }
 
   render() {
     return (
-      <FileUpload
-        uploadClick={() => this.handleClick()}
-        onFileChange={(event) => this.fileChanged(event)}
-      />
+      <div className="max-height">
+        <FileUpload
+          uploadClick={() => this.handleClick()}
+          onFileChange={(event) => this.fileChanged(event)}
+          fileName={this.state.selectedFile}
+        />
+      </div>
     );
   }
 }
