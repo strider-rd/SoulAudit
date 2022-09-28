@@ -7,6 +7,15 @@ import './style.css';
 class App extends React.Component {
   state = {
     selectedFile: null,
+    lintObj: {
+      column: 0,
+      fix: null,
+      line: 0,
+      message: '',
+      ruleId: '',
+      severity: 0,
+    },
+    lintData: [],
   };
 
   handleClick(file) {
@@ -18,6 +27,7 @@ class App extends React.Component {
 
     axios.post(endpoint, formData).then((res) => {
       console.log(res.data);
+      this.setState({ lintData: res.data });
     });
   }
 
@@ -26,14 +36,34 @@ class App extends React.Component {
     event.preventDefault();
   }
 
+  renderlintData() {
+    return (
+      <div className="container">
+        {this.state.lintData.length > 0 && (
+          <div>
+            <h2>Lint Data</h2>
+            {this.state.lintData.map((lintObj, index) => (
+              <div className="container">
+                <tr>
+                  ({lintObj.line}, {lintObj.column}) - {lintObj.message}
+                </tr>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  }
+
   render() {
     return (
-      <div className="max-height">
+      <div className="container max-height">
         <FileUpload
           uploadClick={(file) => this.handleClick(file)}
           onFileChange={(event) => this.fileChanged(event)}
           file={this.state.selectedFile}
         />
+        {this.renderlintData()}
       </div>
     );
   }
