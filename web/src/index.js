@@ -43,7 +43,7 @@ class App extends React.Component {
                 Other -{' '}
                 {
                   this.state.lintData.filter(
-                    (x) => x.severity != 2 && x.severity != 3,
+                    (x) => x.severity !== 2 && x.severity !== 3,
                   ).length
                 }
               </span>
