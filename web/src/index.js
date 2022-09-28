@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import FileUpload from './file-upload.js';
@@ -11,7 +12,13 @@ class App extends React.Component {
   handleClick(file) {
     console.log(file);
     //http request to server send file to backend
-    //localhost:8000/api/fileAudit
+    const endpoint = 'http://localhost:8000/api/fileAudit';
+    const formData = new FormData();
+    formData.append('file', file);
+
+    axios.post(endpoint, formData).then((res) => {
+      console.log(res.data);
+    });
   }
 
   fileChanged(event) {
