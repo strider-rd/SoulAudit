@@ -24,20 +24,23 @@ app.get("/api", (_req, res) => {
 app.post("/api/fileAudit", upload.single("file"), (req, res) => {
   const file = req.file;
   // const fileBuffer = file.buffer.toString("utf-8");
+
   const lintConfig = {
     extends: "solhint:recommended",
     plugins: [],
     rules: {
       "avoid-suicide": "error",
       "avoid-sha3": "warn",
+      "no-unused-vars": "error",
     },
   };
+
   const result = lint.processStr(
     file.buffer.toString(),
     lintConfig,
     file.originalname
   );
-  res.send(result.reports);
+  res.send(result);
 });
 
 app.listen(port, () => {

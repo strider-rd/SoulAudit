@@ -1,33 +1,30 @@
 import axios from 'axios';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import FileUpload from './file-upload.js';
+import AuditFileUpload from './file-upload.js';
 import './style.css';
 
 class App extends React.Component {
-  state = {
-    selectedFile: null,
-    lintObj: {
-      column: 0,
-      fix: null,
-      line: 0,
-      message: '',
-      ruleId: '',
-      severity: 0,
-    },
-    lintData: [],
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedFile: null,
+      lintData: [],
+    };
+  }
 
   handleClick(file) {
-    console.log(file);
     //http request to server send file to backend
     const endpoint = 'http://localhost:8000/api/fileAudit';
     const formData = new FormData();
     formData.append('file', file);
 
+    this.showLoading();
+
     axios.post(endpoint, formData).then((res) => {
       console.log(res.data);
-      this.setState({ lintData: res.data });
+      this.setState({ lintData: res.data.reports });
+      this.hideLoading();
     });
   }
 
@@ -36,19 +33,49 @@ class App extends React.Component {
     event.preventDefault();
   }
 
+  showLoading() {
+    document.getElementById('loader').style.display = 'block';
+    document.getElementById('lintData').style.display = 'none';
+  }
+
+  hideLoading() {
+    document.getElementById('loader').style.display = 'none';
+    document.getElementById('lintData').style.display = 'block';
+  }
+
   renderlintData() {
     return (
-      <div className="container">
+      <div>
         {this.state.lintData.length > 0 && (
-          <div>
-            <h2>Lint Data</h2>
-            {this.state.lintData.map((lintObj, index) => (
-              <div className="container">
+          <div className="container container-column">
+            <h2>Lint Data - {this.state.selectedFile.name}</h2>
+            <table className="styled-table">
+              <thead>
                 <tr>
-                  ({lintObj.line}, {lintObj.column}) - {lintObj.message}
+                  <th>Severity</th>
+                  <th>Line</th>
+                  <th>Message</th>
                 </tr>
-              </div>
-            ))}
+              </thead>
+              {this.state.lintData.map((lintObj, index) => (
+                <tbody key={index}>
+                  <tr
+                    className={
+                      lintObj.severity === 2
+                        ? 'severity-err'
+                        : lintObj.severity === 3
+                        ? 'severity-warn'
+                        : ''
+                    }>
+                    <td>{lintObj.severity}</td>
+                    <td>
+                      ({lintObj.line}, {lintObj.column})
+                    </td>
+                    <td>{lintObj.message}</td>
+                  </tr>
+                </tbody>
+              ))}
+            </table>
           </div>
         )}
       </div>
@@ -58,12 +85,18 @@ class App extends React.Component {
   render() {
     return (
       <div className="container max-height">
-        <FileUpload
+        <AuditFileUpload
           uploadClick={(file) => this.handleClick(file)}
           onFileChange={(event) => this.fileChanged(event)}
           file={this.state.selectedFile}
         />
-        {this.renderlintData()}
+        <div style={{ display: 'none' }} id="loader"></div>
+        <div
+          style={{ display: 'none' }}
+          className="animate-bottom"
+          id="lintData">
+          {this.renderlintData()}
+        </div>
       </div>
     );
   }

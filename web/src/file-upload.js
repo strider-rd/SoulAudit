@@ -1,6 +1,6 @@
-export default function FileUpload(props) {
+export default function AuditFileUpload(props) {
   return (
-    <div className="max-height container">
+    <div className="container container-column">
       <form onSubmit={(event) => event.preventDefault()}>
         <input
           type="file"
