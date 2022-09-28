@@ -2,6 +2,7 @@ import express, { json } from "express";
 const app = express();
 const cors = require("cors");
 const lint = require("solhint");
+const helmet = require("helmet");
 
 const multer = require("multer");
 const storage = multer.memoryStorage();
@@ -16,6 +17,7 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(helmet());
 
 // endpoints
 app.get("/api", (_req, res) => {

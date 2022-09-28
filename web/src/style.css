@@ -28,6 +28,10 @@ textarea {
   border: 1px solid #555;
 }
 
+textarea {
+  min-height: 490px;
+}
+
 .auditor-select {
   width: 350px;
   max-width: 100%;

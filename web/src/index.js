@@ -30,6 +30,24 @@ class App extends React.Component {
         {this.state.lintData.length > 0 && (
           <div className="container container-column">
             <h2>Lint Data</h2>
+            <div className="container">
+              <span>
+                Error -{' '}
+                {this.state.lintData.filter((x) => x.severity === 2).length}
+              </span>
+              <span>
+                Warnings -{' '}
+                {this.state.lintData.filter((x) => x.severity === 3).length}
+              </span>
+              <span>
+                Other -{' '}
+                {
+                  this.state.lintData.filter(
+                    (x) => x.severity != 2 && x.severity != 3,
+                  ).length
+                }
+              </span>
+            </div>
             <table className="styled-table">
               <thead>
                 <tr>
