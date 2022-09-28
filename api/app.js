@@ -1,4 +1,4 @@
-import express from "express";
+import express, { json } from "express";
 const app = express();
 const cors = require("cors");
 const lint = require("solhint");
@@ -15,6 +15,7 @@ var corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.use(express.json());
 
 // endpoints
 app.get("/api", (_req, res) => {
@@ -40,6 +41,23 @@ app.post("/api/fileAudit", upload.single("file"), (req, res) => {
     lintConfig,
     file.originalname
   );
+  res.send(result);
+});
+
+app.post("/api/textAudit", (req, res) => {
+  var solidityCode = req.body.solCode;
+
+  const lintConfig = {
+    extends: "solhint:recommended",
+    plugins: [],
+    rules: {
+      "avoid-suicide": "error",
+      "avoid-sha3": "warn",
+      "no-unused-vars": "error",
+    },
+  };
+
+  const result = lint.processStr(solidityCode, lintConfig);
   res.send(result);
 });
 

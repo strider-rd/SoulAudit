@@ -1,46 +1,27 @@
-import axios from 'axios';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import AuditFileUpload from './file-upload.js';
+import { FileAuditComponent } from './components/file-audit/file-audit-component';
+import { TextAuditComponent } from './components/text-audit/text-audit-component';
+import { hideLoader } from './helpers/loaders';
 import './style.css';
-
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedFile: null,
+      auditor: '',
       lintData: [],
     };
   }
 
-  handleClick(file) {
-    //http request to server send file to backend
-    const endpoint = 'http://localhost:8000/api/fileAudit';
-    const formData = new FormData();
-    formData.append('file', file);
-
-    this.showLoading();
-
-    axios.post(endpoint, formData).then((res) => {
-      console.log(res.data);
-      this.setState({ lintData: res.data.reports });
-      this.hideLoading();
-    });
+  selectAuditor() {
+    var value = document.getElementById('auditor').value;
+    console.log(value);
+    this.setState({ auditor: value, lintData: [] });
   }
 
-  fileChanged(event) {
-    this.setState({ selectedFile: event.target.files[0] });
-    event.preventDefault();
-  }
-
-  showLoading() {
-    document.getElementById('loader').style.display = 'block';
-    document.getElementById('lintData').style.display = 'none';
-  }
-
-  hideLoading() {
-    document.getElementById('loader').style.display = 'none';
-    document.getElementById('lintData').style.display = 'block';
+  populateLintData(data) {
+    this.setState({ lintData: data });
+    hideLoader();
   }
 
   renderlintData() {
@@ -48,7 +29,7 @@ class App extends React.Component {
       <div>
         {this.state.lintData.length > 0 && (
           <div className="container container-column">
-            <h2>Lint Data - {this.state.selectedFile.name}</h2>
+            <h2>Lint Data</h2>
             <table className="styled-table">
               <thead>
                 <tr>
@@ -84,12 +65,28 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="container max-height">
-        <AuditFileUpload
-          uploadClick={(file) => this.handleClick(file)}
-          onFileChange={(event) => this.fileChanged(event)}
-          file={this.state.selectedFile}
-        />
+      <div className="container">
+        <select
+          className="auditor-select"
+          name="auditor"
+          id="auditor"
+          onChange={() => this.selectAuditor()}>
+          <option value={''}>How do you want to edit?</option>
+          <option value={'File'}>Upload file to audit</option>
+          <option value={'Text'}>Enter code to audit</option>
+        </select>
+        {this.state.auditor === 'File' && (
+          <FileAuditComponent
+            polulateData={(data) =>
+              this.populateLintData(data)
+            }></FileAuditComponent>
+        )}
+        {this.state.auditor === 'Text' && (
+          <TextAuditComponent
+            polulateData={(data) =>
+              this.populateLintData(data)
+            }></TextAuditComponent>
+        )}
         <div style={{ display: 'none' }} id="loader"></div>
         <div
           style={{ display: 'none' }}
