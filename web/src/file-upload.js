@@ -9,12 +9,12 @@ export default function FileUpload(props) {
           onChange={props.onFileChange}
         />
       </form>
-      <button className="button" type="submit" onClick={props.uploadClick}>
-        {' '}
-        Update File{' '}
-      </button>
-      {props.fileName != null && props.fileName != undefined && (
-        <p>Uploaded file: - {props.fileName}</p>
+      {props.file !== null && props.file !== undefined && (
+        <button
+          className="button"
+          onClick={() => props.uploadClick(props.file)}>
+          Audit File - {props.file.name}
+        </button>
       )}
     </div>
   );
