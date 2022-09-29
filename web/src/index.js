@@ -29,7 +29,7 @@ class App extends React.Component {
     return (
       <>
         {this.state.lintData.length > 0 && (
-          <div className="container container-column">
+          <div className="d-flex flex-column">
             <h2>Lint Data</h2>
             <div className="container">
               <span>
@@ -86,9 +86,9 @@ class App extends React.Component {
     return (
       <>
         <NavComponent></NavComponent>
-        <div className="container container-margin">
+        <div className="m-3 d-flex flex-gap flex-wrap">
           <select
-            className="auditor-select"
+            className="form-select-sm h-25 auditor-select"
             name="auditor"
             id="auditor"
             onChange={() => this.selectAuditor()}>

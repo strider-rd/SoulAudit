@@ -1,8 +1,9 @@
 export default function AuditFileUpload(props) {
   return (
-    <div className="container container-column">
+    <div className="d-flex flex-column flex-gap">
       <form onSubmit={(event) => event.preventDefault()}>
         <input
+          className="form-control"
           type="file"
           id="file"
           name="file"
@@ -11,7 +12,8 @@ export default function AuditFileUpload(props) {
       </form>
       {props.file !== null && props.file !== undefined && (
         <button
-          className="button"
+          type="button"
+          className="btn btn-primary"
           onClick={() => props.uploadClick(props.file)}>
           Audit File - {props.file.name}
         </button>

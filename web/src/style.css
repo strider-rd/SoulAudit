@@ -16,7 +16,7 @@ body,
   height: 100%;
 }
 
-.container-margin {
+/* .container-margin {
   margin: 20px;
 }
 
@@ -131,6 +131,10 @@ input[type='file']::file-selector-button:hover {
 .styled-table tbody tr.active-row {
   font-weight: bold;
   color: var(--primary-color);
+} */
+
+.flex-gap {
+  gap: 1rem;
 }
 
 /* Loader */
