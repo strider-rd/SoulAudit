@@ -137,6 +137,11 @@ input[type='file']::file-selector-button:hover {
   gap: 1rem;
 }
 
+.sol-code-area {
+  height: 350px;
+  width: 250px;
+}
+
 /* Loader */
 
 #loader {

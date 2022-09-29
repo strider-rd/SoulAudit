@@ -29,9 +29,9 @@ class App extends React.Component {
     return (
       <>
         {this.state.lintData.length > 0 && (
-          <div className="d-flex flex-column">
+          <div className="d-flex flex-column flex-gap">
             <h2>Lint Data</h2>
-            <div className="container">
+            <div className="d-flex flex-row flex-gap">
               <span>
                 Error -{' '}
                 {this.state.lintData.filter((x) => x.severity === 2).length}
@@ -49,7 +49,7 @@ class App extends React.Component {
                 }
               </span>
             </div>
-            <table className="styled-table">
+            <table className="table table-dark table-striped">
               <thead>
                 <tr>
                   <th>Severity</th>
@@ -62,9 +62,9 @@ class App extends React.Component {
                   <tr
                     className={
                       lintObj.severity === 2
-                        ? 'severity-err'
+                        ? 'table-danger'
                         : lintObj.severity === 3
-                        ? 'severity-warn'
+                        ? 'table-warning'
                         : ''
                     }>
                     <td>{lintObj.severity}</td>
@@ -85,7 +85,7 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <NavComponent></NavComponent>
+        {/* <NavComponent></NavComponent> */}
         <div className="m-3 d-flex flex-gap flex-wrap">
           <select
             className="form-select-sm h-25 auditor-select"

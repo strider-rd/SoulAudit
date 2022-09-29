@@ -41,14 +41,14 @@ export class TextAuditComponent extends React.Component {
 
   render() {
     return (
-      <div className="d-flex flex-column">
+      <div className="d-flex flex-column flex-gap">
         <textarea
-          className="form-control"
+          className="form-control mh-100 sol-code-area"
           placeholder="Enter solidity code here"
           value={this.state.textData}
           onChange={this.textChanged}></textarea>
         {this.state.hasError && (
-          <span className="error-text">Something wrong with entered code</span>
+          <span className="text-danger">Something wrong with entered code</span>
         )}
         <button className="btn btn-primary" onClick={() => this.handleClick()}>
           Audit code
