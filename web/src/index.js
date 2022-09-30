@@ -49,7 +49,7 @@ class App extends React.Component {
                 }
               </span>
             </div>
-            <table className="table table-dark table-striped">
+            <table className="table table-dark table-striped table-hover">
               <thead>
                 <tr>
                   <th>Severity</th>
@@ -85,7 +85,7 @@ class App extends React.Component {
   render() {
     return (
       <>
-        {/* <NavComponent></NavComponent> */}
+        <NavComponent></NavComponent>
         <div className="m-3 d-flex flex-gap flex-wrap">
           <select
             className="form-select-sm h-25 auditor-select"
