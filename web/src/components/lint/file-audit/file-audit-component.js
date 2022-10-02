@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React from 'react';
-import { showLoader } from '../../helpers/loaders.js';
+import { showLoader } from '../../../helpers/loaders.js';
 import AuditFileUpload from './file-upload.js';
 
 export class FileAuditComponent extends React.Component {

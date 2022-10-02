@@ -3,7 +3,7 @@ export function showLoader() {
   document.getElementById('lintData').style.display = 'none';
 }
 
-export function hideLoader() {
+export function hideLoader(isError) {
   document.getElementById('loader').style.display = 'none';
-  document.getElementById('lintData').style.display = 'block';
+  if (!isError) document.getElementById('lintData').style.display = 'block';
 }
