@@ -1,68 +1,45 @@
-import express, { json } from "express";
-const app = express();
+const express = require("express");
 const cors = require("cors");
-const lint = require("solhint");
 const helmet = require("helmet");
 
-const multer = require("multer");
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+export class App {
+  express;
+  port;
 
-const port = 8000;
+  constructor(port, controllers) {
+    this.express = express();
+    this.port = port;
+    this.configureMiddleware();
+    this.configureControllers(controllers);
+  }
 
-var corsOptions = {
-  origin: "http://localhost:3000",
-  optionsSuccessStatus: 200,
-};
+  configureMiddleware() {
+    var corsOptions = {
+      origin: "http://localhost:3000",
+      optionsSuccessStatus: 200,
+    };
 
-app.use(cors(corsOptions));
-app.use(express.json());
-app.use(helmet());
+    this.express.use(cors(corsOptions));
+    this.express.use(express.json());
+    this.express.use(helmet());
+  }
 
-// endpoints
-app.get("/api", (_req, res) => {
-  res.send("Hello From API");
-});
+  configureControllers(controllers) {
+    controllers.forEach((controller) => {
+      this.express.use("/api", controller.router);
+    });
+  }
 
-app.post("/api/fileAudit", upload.single("file"), (req, res) => {
-  const file = req.file;
-  // const fileBuffer = file.buffer.toString("utf-8");
+  listen() {
+    // endpoints
+    // this.express.get("/api", (_req, res) => {
+    //   res.send("Hello From API");
+    // });
 
-  const lintConfig = {
-    extends: "solhint:recommended",
-    plugins: [],
-    rules: {
-      "avoid-suicide": "error",
-      "avoid-sha3": "warn",
-      "no-unused-vars": "error",
-    },
-  };
-
-  const result = lint.processStr(
-    file.buffer.toString(),
-    lintConfig,
-    file.originalname
-  );
-  res.send(result);
-});
-
-app.post("/api/textAudit", (req, res) => {
-  var solidityCode = req.body.solCode;
-
-  const lintConfig = {
-    extends: "solhint:recommended",
-    plugins: [],
-    rules: {
-      "avoid-suicide": "error",
-      "avoid-sha3": "warn",
-      "no-unused-vars": "error",
-    },
-  };
-
-  const result = lint.processStr(solidityCode, lintConfig);
-  res.send(result);
-});
-
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+    this.express.listen(this.port, () => {
+      console.log(
+        `🔥🔥 Server is running on http://localhost:${this.port} 🔥🔥`
+      );
+    });
+  }
+}
