@@ -1,8 +1,8 @@
-const express = require("express");
-const cors = require("cors");
-const helmet = require("helmet");
+import cors from "cors";
+import express from "express";
+import helmet from "helmet";
 
-export class App {
+export default class App {
   express;
   port;
 

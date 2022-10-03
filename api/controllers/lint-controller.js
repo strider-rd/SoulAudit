@@ -1,10 +1,10 @@
-const { Router } = require("express");
-const lint = require("solhint");
-const multer = require("multer");
+import Router from "express";
+import multer from "multer";
+import lint from "solhint";
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-export class LintController {
+export default class LintController {
   path;
   router;
 
