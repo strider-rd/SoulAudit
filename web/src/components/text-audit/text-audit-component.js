@@ -26,7 +26,10 @@ export class TextAuditComponent extends React.Component {
     axios.post(endpoint, requestObj).then(
       (res) => {
         console.log(res.data);
-        this.props.polulateData(res.data.reports);
+        this.props.polulateData({
+          fileName: 'Input Code',
+          data: res.data.reports,
+        });
       },
       (error) => {
         this.setState({ hasError: true });

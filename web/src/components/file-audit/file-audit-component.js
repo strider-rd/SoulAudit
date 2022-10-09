@@ -21,8 +21,11 @@ export class FileAuditComponent extends React.Component {
 
     axios.post(endpoint, formData).then(
       (res) => {
-        console.log(res.data);
-        this.props.polulateData(res.data.reports);
+        console.log(file);
+        this.props.polulateData({
+          fileName: file.name,
+          data: res.data.reports,
+        });
       },
       (error) => {},
     );

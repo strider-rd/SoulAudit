@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { FileAuditComponent } from './components/file-audit/file-audit-component';
+import { GitAuditComponent } from './components/lint/git-audit/git-audit-component';
 import NavComponent from './components/nav/nav-component';
 import { TextAuditComponent } from './components/text-audit/text-audit-component';
 import { hideLoader } from './helpers/loaders';
@@ -11,6 +12,7 @@ class App extends React.Component {
     this.state = {
       auditor: '',
       lintData: [],
+      auditFileName: '',
     };
   }
 
@@ -21,7 +23,7 @@ class App extends React.Component {
   }
 
   populateLintData(data) {
-    this.setState({ lintData: data });
+    this.setState({ auditFileName: data.fileName, lintData: data.data });
     hideLoader();
   }
 
@@ -30,7 +32,7 @@ class App extends React.Component {
       <>
         {this.state.lintData.length > 0 && (
           <div className="d-flex flex-column flex-gap">
-            <h2>Lint Data</h2>
+            <h2>Lint Data - {this.state.auditFileName}</h2>
             <div className="d-flex flex-row flex-gap">
               <span>
                 Error -{' '}
@@ -95,6 +97,7 @@ class App extends React.Component {
             <option value={''}>How do you want to edit?</option>
             <option value={'File'}>Upload file to audit</option>
             <option value={'Text'}>Enter code to audit</option>
+            <option value={'Git'}>Git Repo to audit</option>
           </select>
           {this.state.auditor === 'File' && (
             <FileAuditComponent
@@ -107,6 +110,12 @@ class App extends React.Component {
               polulateData={(data) =>
                 this.populateLintData(data)
               }></TextAuditComponent>
+          )}
+          {this.state.auditor === 'Git' && (
+            <GitAuditComponent
+              polulateData={(data) =>
+                this.populateLintData(data)
+              }></GitAuditComponent>
           )}
           <div style={{ display: 'none' }} id="loader"></div>
           <div

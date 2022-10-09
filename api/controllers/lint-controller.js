@@ -49,11 +49,11 @@ export default class LintController {
       const lintConfig = {
         extends: "solhint:recommended",
         plugins: [],
-        rules: {
-          "avoid-suicide": "error",
-          "avoid-sha3": "warn",
-          "no-unused-vars": "error",
-        },
+        // rules: {
+        //   "avoid-suicide": "error",
+        //   "avoid-sha3": "warn",
+        //   "no-unused-vars": "error",
+        // },
       };
 
       const result = lint.processStr(solidityCode, lintConfig);
