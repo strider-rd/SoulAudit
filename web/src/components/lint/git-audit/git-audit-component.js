@@ -9,6 +9,7 @@ export class GitAuditComponent extends React.Component {
       gitRepoUrl: '',
       filesData: [],
     };
+    props.clearLintData();
   }
 
   setRepoUrl = (e) => {
@@ -16,6 +17,7 @@ export class GitAuditComponent extends React.Component {
   };
 
   getGitData = () => {
+    this.props.clearLintData();
     const extractedString = this.extractGitHubRepoPath(this.state.gitRepoUrl);
     const baseUrl = `https://api.github.com/search/code?q=extension:sol+repo:${extractedString}`;
     showLoader();
@@ -73,7 +75,7 @@ export class GitAuditComponent extends React.Component {
         for (const a of document.querySelectorAll('a.active')) {
           a.classList.remove('active');
         }
-        event.target.className += ' active';
+        event.target.classList.add('active');
       },
       (reject) => console.error(reject),
     );
@@ -117,6 +119,7 @@ export class GitAuditComponent extends React.Component {
                   key={index}
                   className="list-group"
                   id="list-tab"
+                  style={{ cursor: 'pointer' }}
                   role="tablist">
                   <a
                     className="list-group-item list-group-item-action"

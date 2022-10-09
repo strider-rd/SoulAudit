@@ -22,6 +22,10 @@ class App extends React.Component {
     this.setState({ auditor: value, lintData: [] });
   }
 
+  clearLintData = () => {
+    this.setState({ lintData: [] });
+  };
+
   populateLintData(data) {
     this.setState({ auditFileName: data.fileName, lintData: data.data });
     hideLoader();
@@ -93,6 +97,7 @@ class App extends React.Component {
             className="form-select-sm h-25 auditor-select"
             name="auditor"
             id="auditor"
+            style={{ cursor: 'pointer' }}
             onChange={() => this.selectAuditor()}>
             <option value={''}>How do you want to edit?</option>
             <option value={'File'}>Upload file to audit</option>
@@ -113,9 +118,8 @@ class App extends React.Component {
           )}
           {this.state.auditor === 'Git' && (
             <GitAuditComponent
-              polulateData={(data) =>
-                this.populateLintData(data)
-              }></GitAuditComponent>
+              polulateData={(data) => this.populateLintData(data)}
+              clearLintData={this.clearLintData}></GitAuditComponent>
           )}
           <div style={{ display: 'none' }} id="loader"></div>
           <div
