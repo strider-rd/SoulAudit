@@ -61,7 +61,7 @@ export class GitAuditComponent extends React.Component {
     );
   }
 
-  auditGitFile = (fileName, gitUrl) => {
+  auditGitFile = (event, fileName, gitUrl) => {
     showLoader();
     axios.get(gitUrl).then(
       (res) => {
@@ -69,6 +69,11 @@ export class GitAuditComponent extends React.Component {
         const encodedContent = res.data.content;
         var decodedContent = atob(encodedContent);
         this.getAuditData(fileName, decodedContent);
+
+        for (const a of document.querySelectorAll('a.active')) {
+          a.classList.remove('active');
+        }
+        event.target.className += ' active';
       },
       (reject) => console.error(reject),
     );
@@ -78,31 +83,53 @@ export class GitAuditComponent extends React.Component {
     return (
       <>
         <div className="d-flex flex-column flex-gap">
-          <input
-            className="form-control"
-            placeholder="Git Repo Url"
-            value={this.state.gitRepoUrl}
-            onChange={this.setRepoUrl}></input>
-          <button className="btn btn-primary" onClick={this.getGitData}>
-            Get Git Data
-          </button>
+          <form
+            className="d-flex flex-column flex-gap"
+            onSubmit={(event) => event.preventDefault()}>
+            <input
+              className="form-control"
+              placeholder="Git Repo Url"
+              value={this.state.gitRepoUrl}
+              onChange={this.setRepoUrl}></input>
+            <button className="btn btn-primary" onClick={this.getGitData}>
+              Get Git Data
+            </button>
+          </form>
+          {this.state.filesData.length > 0 && <p>Click files to audit</p>}
           <div>
             {this.state.filesData.length > 0 &&
               this.state.filesData.map((item, index) => (
-                <ul key={index}>
-                  <li>
-                    <h2>
-                      {item.name}{' '}
-                      <button
-                        className="btn btn-primary"
-                        onClick={() =>
-                          this.auditGitFile(item.name, item.gitUrl)
-                        }>
-                        Lint this file
-                      </button>
-                    </h2>
-                  </li>
-                </ul>
+                // <ul key={index} className="list-group">
+                //   <li className="list-group-item">
+                //     <div className="d-flex flex-row">
+                //       <p className="me-auto">{item.name} </p>
+                //       <button
+                //         className="btn btn-primary"
+                //         onClick={() =>
+                //           this.auditGitFile(item.name, item.gitUrl)
+                //         }>
+                //         Lint this file
+                //       </button>
+                //     </div>
+                //   </li>
+                // </ul>
+                <div
+                  key={index}
+                  className="list-group"
+                  id="list-tab"
+                  role="tablist">
+                  <a
+                    className="list-group-item list-group-item-action"
+                    id="list-home-list"
+                    data-toggle="list"
+                    role="tab"
+                    onClick={(event) =>
+                      this.auditGitFile(event, item.name, item.gitUrl)
+                    }
+                    aria-controls="home">
+                    {item.name}
+                  </a>
+                </div>
               ))}
           </div>
         </div>
