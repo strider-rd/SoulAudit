@@ -4,7 +4,7 @@ export default function HomeComponent(props) {
     <div className="d-flex flex-column flex-gap flex-align align-items-center flex-wrap">
       <div>Welcome to Solidity Lint Playground. This app is made in react.</div>
       <div>Don't be in a CAAAAGEEE</div>
-      <img src="https://www.placecage.com/c/1080/360"></img>
+      <img src="https://www.placecage.com/c/1080/360" alt="Just Kidding"></img>
       <div>Please read this Lorem Ipsum.</div>
       <div>
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod

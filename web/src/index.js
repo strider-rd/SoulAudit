@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomeComponent from './components/home/home-component';
 import LintComponent from './components/lint/lint-component';
 import NavComponent from './components/nav/nav-component';
