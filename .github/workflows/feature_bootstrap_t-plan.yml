@@ -53,4 +53,4 @@ jobs:
           app-name: 't-plan'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A1906FDCF0DF4351B9C635D68A289F61 }}
-          package: .
+          package: web/.
